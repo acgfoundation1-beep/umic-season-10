@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UMIC Season 10 | Voting</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #100c27;
+  color: white;
+}
+header {
+  background: #211447;
+  padding: 25px 15px;
+  text-align: center;
+  border-bottom: 3px solid #d6ad45;
+}
+header h1 { color: #f5cf65; margin: 5px; }
+header p { margin: 8px; }
+.hero {
+  text-align: center;
+  padding: 45px 15px;
+  background: linear-gradient(135deg,#211447,#493080);
+}
+.hero h2 { font-size: 30px; color: #ffda76; }
+.hero p { line-height: 1.7; }
+.vote-price {
+  color: #ffda76;
+  font-size: 24px;
+  font-weight: bold;
+}
+.container {
+  max-width: 950px;
+  margin: auto;
+  padding: 25px 15px;
+}
+h2.section { text-align: center; color: #ffda76; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+  gap: 15px;
+}
+.card {
+  background: #211a40;
+  border: 1px solid #b99542;
+  border-radius: 12px;
+  padding: 20px 10px;
+  text-align: center;
+}
+.card h3 { color: #ffda76; }
+.card p { font-size: 13px; }
+.card button {
+  background: #d5ad4b;
+  border: none;
+  padding: 11px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.instructions {
+  background: #211a40;
+  padding: 22px;
+  border-radius: 12px;
+  line-height: 1.8;
+  margin-top: 30px;
+}
+footer {
+  text-align: center;
+  padding: 25px;
+  background: #211447;
+  color: #ffda76;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>UMIC SEASON 10</h1>
+<p>Uncommon Music Icons</p>
+<p>Powered by Action by Grace Foundation</p>
+</header>
+
+<section class="hero">
+<h2>THE VOTING IS ON!</h2>
+<p>Support your favourite contestant.
+Every vote counts!</p>
+<div class="vote-price">₦100 PER VOTE</div>
+<p>Celebrate talent. Support excellence.</p>
+</section>
+
+<div class="container">
+<h2 class="section">MEET OUR 9 FINALISTS</h2>
+<div class="grid" id="contestants"></div>
+
+<div class="instructions">
+<h2 style="color:#ffda76">HOW TO VOTE</h2>
+1. Select your favourite contestant.<br>
+2. Choose the number of votes.<br>
+3. Complete payment using the official payment details.<br>
+4. Your successful payment will be verified before votes are counted.
+</div>
+</div>
+
+<footer>
+<p>UMIC Season 10</p>
+<p>Action by Grace Foundation</p>
+<p>Celebrating Uncommon Music Icons</p>
+</footer>
+
+<script>
+const contestants = [
+"Contestant 1",
+"Contestant 2",
+"Contestant 3",
+"Contestant 4",
+"Contestant 5",
+"Contestant 6",
+"Contestant 7",
+"Contestant 8",
+"Contestant 9"
+];
+
+document.getElementById("contestants").innerHTML =
+contestants.map((name, i) => `
+<div class="card">
+<h3>${name}</h3>
+<p>UMIC Season 10 Finalist</p>
+<button onclick="alert('Voting payment will be activated soon.')">
+Vote Now
+</button>
+</div>
+`).join("");
+</script>
+
+</body>
+</html>
