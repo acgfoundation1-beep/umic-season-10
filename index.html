@@ -4,104 +4,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UMIC Season 10 | Voting</title>
+<title>UMIC Season 10 | Action by Grace Foundation</title>
 <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #100c27;
-  color: white;
-}
-header {
-  background: #211447;
-  padding: 25px 15px;
-  text-align: center;
-  border-bottom: 3px solid #d6ad45;
-}
-header h1 { color: #f5cf65; margin: 5px; }
-header p { margin: 8px; }
-.hero {
-  text-align: center;
-  padding: 45px 15px;
-  background: linear-gradient(135deg,#211447,#493080);
-}
-.hero h2 { font-size: 30px; color: #ffda76; }
-.hero p { line-height: 1.7; }
-.vote-price {
-  color: #ffda76;
-  font-size: 24px;
-  font-weight: bold;
-}
-.container {
-  max-width: 950px;
-  margin: auto;
-  padding: 25px 15px;
-}
-h2.section { text-align: center; color: #ffda76; }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
-  gap: 15px;
-}
-.card {
-  background: #211a40;
-  border: 1px solid #b99542;
-  border-radius: 12px;
-  padding: 20px 10px;
-  text-align: center;
-}
-.card h3 { color: #ffda76; }
-.card p { font-size: 13px; }
-.card button {
-  background: #d5ad4b;
-  border: none;
-  padding: 11px 18px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.instructions {
-  background: #211a40;
-  padding: 22px;
-  border-radius: 12px;
-  line-height: 1.8;
-  margin-top: 30px;
-}
-footer {
-  text-align: center;
-  padding: 25px;
-  background: #211447;
-  color: #ffda76;
-}
+*{box-sizing:border-box}
+body{margin:0;background:#100c27;color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:28px 12px;background:#211447;border-bottom:3px solid #d6ad45}
+h1{color:#ffda76;margin:5px}
+.hero{text-align:center;padding:35px 15px;background:linear-gradient(135deg,#211447,#493080)}
+.hero h2{color:#ffda76}
+.price{font-size:25px;font-weight:bold;color:#ffda76}
+.container{max-width:950px;margin:auto;padding:20px 14px}
+.section{text-align:center;color:#ffda76}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+.card{background:#211a40;border:1px solid #b99542;border-radius:12px;padding:18px}
+.card h3{color:#ffda76}
+.details{font-size:14px;line-height:1.8;overflow-wrap:anywhere}
+button{background:#d5ad4b;border:0;padding:10px 14px;border-radius:6px;font-weight:bold}
+.note{background:#211a40;padding:20px;border-radius:12px;line-height:1.7;margin-top:25px}
+footer{text-align:center;padding:25px;background:#211447;color:#ffda76}
 </style>
 </head>
 <body>
-
 <header>
 <h1>UMIC SEASON 10</h1>
-<p>Uncommon Music Icons</p>
+<p>UNCOMMON MUSIC ICONS</p>
 <p>Powered by Action by Grace Foundation</p>
 </header>
 
 <section class="hero">
-<h2>THE VOTING IS ON!</h2>
-<p>Support your favourite contestant.
-Every vote counts!</p>
-<div class="vote-price">₦100 PER VOTE</div>
+<h2>SUPPORT YOUR FAVOURITE FINALIST!</h2>
 <p>Celebrate talent. Support excellence.</p>
+<div class="price">₦100 PER VOTE</div>
+<p>Every vote counts!</p>
 </section>
 
 <div class="container">
 <h2 class="section">MEET OUR 9 FINALISTS</h2>
+<p style="text-align:center">Make your payment to the account displayed under your chosen finalist.</p>
 <div class="grid" id="contestants"></div>
 
-<div class="instructions">
+<div class="note">
 <h2 style="color:#ffda76">HOW TO VOTE</h2>
-1. Select your favourite contestant.<br>
-2. Choose the number of votes.<br>
-3. Complete payment using the official payment details.<br>
-4. Your successful payment will be verified before votes are counted.
+1. Choose your favourite finalist.<br>
+2. Transfer ₦100 for each vote to the displayed account.<br>
+3. Keep your payment receipt.<br>
+4. Submit your receipt to the UMIC organisers for confirmation.
+<p><b>Important:</b> Votes are not counted automatically yet. Payment verification and vote counting will be activated after the payment system is connected.</p>
 </div>
 </div>
 
@@ -113,28 +61,31 @@ Every vote counts!</p>
 
 <script>
 const contestants = [
-"Contestant 1",
-"Contestant 2",
-"Contestant 3",
-"Contestant 4",
-"Contestant 5",
-"Contestant 6",
-"Contestant 7",
-"Contestant 8",
-"Contestant 9"
+["Victory Temiloluwa","9819790531","Wema Bank"],
+["Alhassan Sussan Omojo","9819790768","Wema Bank"],
+["Nemile Abu","9634628841","Paystack-Titan"],
+["Crown Ikani","9634673195","Paystack-Titan"],
+["Daniel YUNUSA","9819791129","Wema Bank"],
+["Joy Sunday","9819791239","Wema Bank"],
+["Ekele PraiseGod","9819528563","Wema Bank"],
+["Gabriel Deborah","9634807822","Paystack-Titan"],
+["Alade Gabriel","9819812082","Wema Bank"]
 ];
 
 document.getElementById("contestants").innerHTML =
-contestants.map((name, i) => `
+contestants.map((c,i)=>`
 <div class="card">
-<h3>${name}</h3>
+<h3>${i+1}. ${c[0]}</h3>
 <p>UMIC Season 10 Finalist</p>
-<button onclick="alert('Voting payment will be activated soon.')">
-Vote Now
-</button>
+<div class="details">
+<b>Bank:</b> ${c[2]}<br>
+<b>Account number:</b> ${c[1]}
+</div>
+<br>
+<button onclick="navigator.clipboard.writeText('${c[1]}').then(()=>alert('Account number copied'))">Copy Account Number</button>
 </div>
 `).join("");
 </script>
-
 </body>
 </html>
+>
