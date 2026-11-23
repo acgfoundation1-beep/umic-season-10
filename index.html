@@ -3,25 +3,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UMIC Season 10 | Action by Grace Foundation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UMIC Season 10 - Vote Now</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#100c27;color:white;font-family:Arial,sans-serif}
-header{text-align:center;padding:28px 12px;background:#211447;border-bottom:3px solid #d6ad45}
-h1{color:#ffda76;margin:5px}
+header,footer{background:#211447;text-align:center;padding:25px;border-bottom:3px solid #d6ad45}
+h1,h2,h3{color:#ffda76}
 .hero{text-align:center;padding:35px 15px;background:linear-gradient(135deg,#211447,#493080)}
-.hero h2{color:#ffda76}
-.price{font-size:25px;font-weight:bold;color:#ffda76}
+.price{font-size:25px;color:#ffda76;font-weight:bold}
 .container{max-width:950px;margin:auto;padding:20px 14px}
-.section{text-align:center;color:#ffda76}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
-.card{background:#211a40;border:1px solid #b99542;border-radius:12px;padding:18px}
-.card h3{color:#ffda76}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px}
+.card,.instructions{background:#211a40;border:1px solid #b99542;border-radius:12px;padding:18px}
+.card{text-align:center}
+button{background:#d5ad4b;color:#160e28;border:0;padding:12px 18px;border-radius:7px;font-weight:bold;cursor:pointer}
+.vote{width:100%;margin-top:12px}
 .details{font-size:14px;line-height:1.8;overflow-wrap:anywhere}
-button{background:#d5ad4b;border:0;padding:10px 14px;border-radius:6px;font-weight:bold}
-.note{background:#211a40;padding:20px;border-radius:12px;line-height:1.7;margin-top:25px}
-footer{text-align:center;padding:25px;background:#211447;color:#ffda76}
+.modal{display:none;position:fixed;inset:0;background:#000c;z-index:5;padding:18px;overflow:auto}
+.panel{background:#211447;border:2px solid #d5ad4b;border-radius:12px;padding:22px;max-width:420px;margin:35px auto}
+input{width:100%;padding:13px;font-size:18px;margin:12px 0;border-radius:6px}
+.total{font-size:24px;color:#ffda76;font-weight:bold}
 </style>
 </head>
 <body>
@@ -39,17 +40,32 @@ footer{text-align:center;padding:25px;background:#211447;color:#ffda76}
 </section>
 
 <div class="container">
-<h2 class="section">MEET OUR 9 FINALISTS</h2>
-<p style="text-align:center">Make your payment to the account displayed under your chosen finalist.</p>
+<h2 style="text-align:center">MEET OUR 9 FINALISTS</h2>
 <div class="grid" id="contestants"></div>
+<div class="instructions">
+<h2>HOW TO VOTE</h2>
+1. Select your favourite finalist.<br>
+2. Tap VOTE NOW.<br>
+3. Enter the number of votes.<br>
+4. Pay using the displayed bank details.<br>
+5. Keep your payment receipt and send it to the organisers.
+<p><b>Note:</b> Payments and votes must be confirmed by the organisers. Automatic payment verification is not yet connected.</p>
+</div>
+</div>
 
-<div class="note">
-<h2 style="color:#ffda76">HOW TO VOTE</h2>
-1. Choose your favourite finalist.<br>
-2. Transfer ₦100 for each vote to the displayed account.<br>
-3. Keep your payment receipt.<br>
-4. Submit your receipt to the UMIC organisers for confirmation.
-<p><b>Important:</b> Votes are not counted automatically yet. Payment verification and vote counting will be activated after the payment system is connected.</p>
+<div class="modal" id="voteModal">
+<div class="panel">
+<h2 id="selectedName">Vote</h2>
+<p>How many votes do you want?</p>
+<input id="voteCount" type="number" min="1" step="1" value="1">
+<p>Price per vote: ₦100</p>
+<p class="total" id="total">Total: ₦100</p>
+<hr>
+<h3>Payment details</h3>
+<p id="bankDetails" class="details"></p>
+<button onclick="copyAccount()">COPY ACCOUNT NUMBER</button>
+<p style="font-size:13px">After payment, keep your receipt and contact the UMIC organisers for confirmation.</p>
+<button onclick="closeVote()">CLOSE</button>
 </div>
 </div>
 
@@ -60,7 +76,7 @@ footer{text-align:center;padding:25px;background:#211447;color:#ffda76}
 </footer>
 
 <script>
-const contestants = [
+const contestants=[
 ["Victory Temiloluwa","9819790531","Wema Bank"],
 ["Alhassan Sussan Omojo","9819790768","Wema Bank"],
 ["Nemile Abu","9634628841","Paystack-Titan"],
@@ -72,8 +88,9 @@ const contestants = [
 ["Alade Gabriel","9819812082","Wema Bank"]
 ];
 
-document.getElementById("contestants").innerHTML =
-contestants.map((c,i)=>`
+let selected=null;
+
+document.getElementById("contestants").innerHTML=contestants.map((c,i)=>`
 <div class="card">
 <h3>${i+1}. ${c[0]}</h3>
 <p>UMIC Season 10 Finalist</p>
@@ -81,11 +98,34 @@ contestants.map((c,i)=>`
 <b>Bank:</b> ${c[2]}<br>
 <b>Account number:</b> ${c[1]}
 </div>
-<br>
-<button onclick="navigator.clipboard.writeText('${c[1]}').then(()=>alert('Account number copied'))">Copy Account Number</button>
+<button class="vote" onclick="openVote(${i})">VOTE NOW</button>
 </div>
 `).join("");
+
+function openVote(i){
+selected=contestants[i];
+document.getElementById("selectedName").textContent="Vote for "+selected[0];
+document.getElementById("bankDetails").innerHTML=
+"<b>Bank:</b> "+selected[2]+"<br><b>Account number:</b> "+selected[1];
+document.getElementById("voteCount").value=1;
+updateTotal();
+document.getElementById("voteModal").style.display="block";
+}
+function updateTotal(){
+let n=parseInt(document.getElementById("voteCount").value)||0;
+document.getElementById("total").textContent="Total: ₦"+(Math.max(0,n)*100).toLocaleString("en-NG");
+}
+document.getElementById("voteCount").addEventListener("input",updateTotal);
+function closeVote(){
+document.getElementById("voteModal").style.display="none";
+}
+function copyAccount(){
+if(selected){
+navigator.clipboard.writeText(selected[1])
+.then(()=>alert("Account number copied"))
+.catch(()=>alert("Please copy the account number shown on screen."));
+}
+}
 </script>
 </body>
 </html>
->
