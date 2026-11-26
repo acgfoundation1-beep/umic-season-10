@@ -16,6 +16,8 @@ h1,h2,h3{color:#ffda76}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px}
 .card,.instructions{background:#211a40;border:1px solid #b99542;border-radius:12px;padding:18px}
 .card{text-align:center}
+.photo{width:100%;height:230px;object-fit:cover;border-radius:9px;background:#392b60}
+.photo-placeholder{height:230px;background:#392b60;border-radius:9px;display:none;place-items:center;color:#ffda76}
 .vote-count{font-size:22px;color:#ffda76;font-weight:bold;margin:12px 0}
 button{background:#d5ad4b;color:#160e28;border:0;padding:12px 18px;border-radius:7px;font-weight:bold;cursor:pointer}
 .vote{width:100%;margin-top:12px}
@@ -50,7 +52,7 @@ input{width:100%;padding:13px;font-size:18px;margin:12px 0;border-radius:6px}
 3. Enter the number of votes.<br>
 4. Pay using the displayed bank details.<br>
 5. Keep your payment receipt.
-<p><b>Note:</b> Vote totals update automatically after successful payment confirmation. Please allow a short time for votes to appear.</p>
+<p><b>Important:</b> This page displays payment details but does not verify payments automatically. A vote counts only after payment is confirmed and recorded by the voting system. Check that your votes appear on the leaderboard.</p>
 </div>
 </div>
 
@@ -93,6 +95,9 @@ let selected=null;
 
 document.getElementById("contestants").innerHTML=contestants.map((c,i)=>`
 <div class="card">
+<img class="photo" src="images/contestant-${i+1}.jpg"
+alt="${c[0]}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+<div class="photo-placeholder">Contestant photo coming soon</div>
 <h3>${i+1}. ${c[0]}</h3>
 <p>UMIC Season 10 Finalist</p>
 <div class="vote-count">Live votes: <span id="votes-${i}">0</span></div>
